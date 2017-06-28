@@ -11,8 +11,10 @@
 #include <arpa/inet.h>
 #include "templates.h"
 
-#define NETWORK_XML_FILE "/app/webroot/WebApp/common/config/lan/config.xml"
+#define NETWORK_XML_FILE "/data/userdata/lan/config.xml"
+//#define NETWORK_XML_FILE "./config.xml"
 #define TEMPLATE_FILE "/system/etc/dhcps.owl.templ"
+//#define TEMPLATE_FILE "./dhcps.owl.templ"
 
 #define BITS(n) ((unsigned int)(1 << n) - 1)
 #define IPMASK(n) (~BITS(32 - n))
@@ -67,12 +69,14 @@ void invoke_network_vars(){
 
 	//проверка и коррекция если нужно startip/endip
 	inet_aton(startip, &tmp);
-	if(ntohl(tmp.s_addr) < minip){
+	tmp.s_addr = ntohl(tmp.s_addr);
+	if(tmp.s_addr < minip || tmp.s_addr > maxip){
 		tmp.s_addr = htonl(minip);
 		strcpy(startip, inet_ntoa(tmp));
 	}
 	inet_aton(endip, &tmp);
-	if(ntohl(tmp.s_addr) > maxip){
+	tmp.s_addr = ntohl(tmp.s_addr);
+	if(tmp.s_addr < minip || tmp.s_addr > maxip){
 		tmp.s_addr = htonl(maxip);
 		strcpy(endip, inet_ntoa(tmp));
 	}
@@ -82,7 +86,7 @@ int main(void){
 	//грузим конфиг сети в xml формате
 	templ_vars_setup(network_xml_file_vars);
 	load_templ_vars_vals_from_file(NETWORK_XML_FILE);
-	//dump_templ_vars();
+	dump_templ_vars();
 	ipaddr = get_templ_var_val("ipaddress");
 	mask = get_templ_var_val("mask");
 	startip = get_templ_var_val("startip");
@@ -99,8 +103,8 @@ int main(void){
 	set_templ_var_val("SUBNET_MASK", mask);
 	set_templ_var_val("DHCP_START_IP", startip);
 	set_templ_var_val("DHCP_END_IP", endip);
-	//dump_templ_vars();
+	dump_templ_vars();
 
 	//парсим и выводим результат
-	parse_templ(TEMPLATE_FILE);
+	//parse_templ(TEMPLATE_FILE);
 }
