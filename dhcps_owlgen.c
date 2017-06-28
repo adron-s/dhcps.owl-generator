@@ -11,8 +11,8 @@
 #include <arpa/inet.h>
 #include "templates.h"
 
-#define NETWORK_XML_FILE "./config.xml"
-#define TEMPLATE_FILE "./dhcps.owl"
+#define NETWORK_XML_FILE "/app/webroot/WebApp/common/config/lan/config.xml"
+#define TEMPLATE_FILE "/system/etc/dhcps.owl.templ"
 
 #define BITS(n) ((unsigned int)(1 << n) - 1)
 #define IPMASK(n) (~BITS(32 - n))
