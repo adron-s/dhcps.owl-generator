@@ -1,0 +1,14 @@
+Interface br0
+MinLease 30
+Vendorid c0012
+Address main
+EnbSrv 1
+Start %DHCP_START_IP%
+End %DHCP_END_IP%
+Option lease 86400
+Option subnet %SUBNET_MASK%
+Option router %ROUTER%
+Option dns 172.26.238.3
+Option dns 172.26.238.38
+Option ntpsvr 10.255.0.254
+Address main end

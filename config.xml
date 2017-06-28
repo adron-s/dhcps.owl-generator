@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+	<dhcps>
+		<status>1</status>
+		<ipaddress>10.255.11.174</ipaddress>
+		<mask>255.255.255.240</mask>
+		<startip>10.255.11.162</startip>
+		<endip>10.255.11.173</endip>
+		<leasetime>86400</leasetime>
+		<dnsstatus>1</dnsstatus>
+		<primarydns>192.168.8.1</primarydns>
+		<secondarydns>192.168.8.1</secondarydns>
+		<macaddr>00:1E:8D:56:F1:24</macaddr>
+	</dhcps>
+	<landns>
+		<hgwurl>hi.link</hgwurl>
+	</landns>
+	<ipmodes>
+		<mode>0</mode>					
+	</ipmodes>
+	<dhcpsv6>
+		<status>0</status>			
+		<mode>0</mode>			
+		<plenth></plenth>			
+		<pinfo></pinfo>			
+		<ptime></ptime>			
+		<vtime></vtime>			
+		<primarydns></primarydns>		
+		<secondarydns></secondarydns>	
+	</dhcpsv6>
+	<radvd>
+		<status>0</status>
+		<mode>0</mode>
+		<plenth></plenth>
+		<pinfo></pinfo>
+		<ptime></ptime>
+		<vtime></vtime>
+	</radvd>
+</config>
