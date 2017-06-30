@@ -11,10 +11,15 @@
 #include <arpa/inet.h>
 #include "templates.h"
 
-#define NETWORK_XML_FILE "/data/userdata/lan/config.xml"
-//#define NETWORK_XML_FILE "./config.xml"
-#define TEMPLATE_FILE "/system/etc/dhcps.owl.templ"
-//#define TEMPLATE_FILE "./dhcps.owl.templ"
+//#define DEBUG 1
+
+#ifdef DEBUG
+	#define NETWORK_XML_FILE "./config.xml"
+	#define TEMPLATE_FILE "./dhcps.owl.templ"
+#else
+	#define NETWORK_XML_FILE "/data/userdata/lan/config.xml"
+	#define TEMPLATE_FILE "/system/etc/dhcps.owl.templ"
+#endif
 
 #define BITS(n) ((unsigned int)(1 << n) - 1)
 #define IPMASK(n) (~BITS(32 - n))
@@ -26,6 +31,7 @@
 }
 
 static struct templ_var templ_vars[] = {
+	{ "MODEM_IP",  "" },
 	{ "ROUTER",  "" },
 	{ "SUBNET_MASK", "255.255.255.0" },
 	{ "DHCP_START_IP", "" },
@@ -83,11 +89,15 @@ void invoke_network_vars(){
 }//---------------------------------------------------------------------------------
 
 int main(void){
+	//для сохранения оригинального ip модема
+	char modem_ip[templ_var_val_len];
 	//грузим конфиг сети в xml формате
 	templ_vars_setup(network_xml_file_vars);
 	load_templ_vars_vals_from_file(NETWORK_XML_FILE);
-	dump_templ_vars();
+	//dump_templ_vars();
 	ipaddr = get_templ_var_val("ipaddress");
+	//сохраним оригинальный ip модема
+	strcpy(modem_ip, ipaddr);
 	mask = get_templ_var_val("mask");
 	startip = get_templ_var_val("startip");
 	endip = get_templ_var_val("endip");
@@ -99,12 +109,13 @@ int main(void){
 
 	//перегружаем его в шаблонизатор для результата
 	templ_vars_setup(templ_vars);
+	set_templ_var_val("MODEM_IP", modem_ip);
 	set_templ_var_val("ROUTER", ipaddr);
 	set_templ_var_val("SUBNET_MASK", mask);
 	set_templ_var_val("DHCP_START_IP", startip);
 	set_templ_var_val("DHCP_END_IP", endip);
-	dump_templ_vars();
+	//dump_templ_vars();
 
 	//парсим и выводим результат
-	//parse_templ(TEMPLATE_FILE);
+	parse_templ(TEMPLATE_FILE);
 }
