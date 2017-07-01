@@ -20,6 +20,6 @@ void set_templ_var_val(char *var_name, char *var_val);
 int parse_templ_string(char *buf, int len);
 void parse_templ(char *fname);
 struct templ_var *parse_templ_var_str(char *buf, int len);
-void load_templ_vars_vals_from_file(char *fname);
+int load_templ_vars_vals_from_file(char *fname);
 
 #endif /* _TEMPLATES */

@@ -93,7 +93,10 @@ int main(void){
 	char modem_ip[templ_var_val_len];
 	//грузим конфиг сети в xml формате
 	templ_vars_setup(network_xml_file_vars);
-	load_templ_vars_vals_from_file(NETWORK_XML_FILE);
+	if(load_templ_vars_vals_from_file(NETWORK_XML_FILE)){
+		fprintf(stderr, "Can't open network xml file\n");
+		return -1;
+	}
 	//dump_templ_vars();
 	ipaddr = get_templ_var_val("ipaddress");
 	//сохраним оригинальный ip модема

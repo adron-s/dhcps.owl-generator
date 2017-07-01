@@ -217,11 +217,11 @@ struct templ_var *parse_templ_var_str(char *buf, int len){
 
 //**********************************************************************************
 /* загружает из XML файла значения для переменных шаблона */
-void load_templ_vars_vals_from_file(char *fname){
+int load_templ_vars_vals_from_file(char *fname){
 	FILE* fd;
 	char buf[255];
 	fd = fopen(fname, "r");
-	if(!fd) return;
+	if(!fd) return -1;
 	//построчно читаем файл
 	while(fgets(buf, sizeof(buf), (FILE*)fd)){
 		struct templ_var *var_defs, *var;
@@ -233,4 +233,5 @@ void load_templ_vars_vals_from_file(char *fname){
 			strcpy(var->var_val, var_defs->var_val);
 	}
 	fclose(fd);
+	return 0;
 }//---------------------------------------------------------------------------------
