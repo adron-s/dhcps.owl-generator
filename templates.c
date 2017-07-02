@@ -68,7 +68,19 @@ void set_templ_var_val(char *var_name, char *var_val){
 	if(!var)
 		return;
 	memset(var->var_val, 0x0, sizeof(var->var_val));
-	strncpy(var->var_val, var_val, sizeof(var->var_val) - 1);
+	if(var_val)
+		strncpy(var->var_val, var_val, sizeof(var->var_val) - 1);
+}//---------------------------------------------------------------------------------
+
+//**********************************************************************************
+/* провяет все переменные шаблона на заполненность значения */
+int check_all_templ_vars_for_zerofill(void){
+	int a;
+	for(a = 0; a < templ_vars_count; a++){
+		if(templ_vars[a].var_val[0] == '\0')
+			return 1;
+	}
+	return 0;
 }//---------------------------------------------------------------------------------
 
 //**********************************************************************************

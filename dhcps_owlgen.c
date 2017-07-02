@@ -33,7 +33,7 @@
 static struct templ_var templ_vars[] = {
 	{ "MODEM_IP",  "" },
 	{ "ROUTER",  "" },
-	{ "SUBNET_MASK", "255.255.255.0" },
+	{ "SUBNET_MASK", "" },
 	{ "DHCP_START_IP", "" },
 	{ "DHCP_END_IP", "" },
 };
@@ -98,6 +98,12 @@ int main(void){
 		return -1;
 	}
 	//dump_templ_vars();
+	/* проверим что все переменные из NETWORK_XML_FILE на которые
+		 мы рассчитываем были успешно прочитаны */
+	if(check_all_templ_vars_for_zerofill()){
+		fprintf(stderr, "ERROR: Some templ vars has zerofill!\n");
+		return -2;
+	}
 	ipaddr = get_templ_var_val("ipaddress");
 	//сохраним оригинальный ip модема
 	strcpy(modem_ip, ipaddr);

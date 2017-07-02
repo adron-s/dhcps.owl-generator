@@ -21,5 +21,6 @@ int parse_templ_string(char *buf, int len);
 void parse_templ(char *fname);
 struct templ_var *parse_templ_var_str(char *buf, int len);
 int load_templ_vars_vals_from_file(char *fname);
+int check_all_templ_vars_for_zerofill(void);
 
 #endif /* _TEMPLATES */
