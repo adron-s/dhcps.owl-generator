@@ -65,10 +65,10 @@ void invoke_network_vars(){
 		gw = maxip;
 		maxip = gw - 4; //4 штуки^
 	}else{
-		//для /25 и выше: первый(шлюз)..клиенты..последний(терминал/модем)
+		//для /25 и выше: первый(шлюз)..клиенты..предпоследний - резерв, последний(терминал/модем)
 		gw = minip;
 		minip++;
-		maxip--;
+		maxip -= 2;
 	}
 	tmp.s_addr = htonl(gw);
 	strcpy(ipaddr, inet_ntoa(tmp));
